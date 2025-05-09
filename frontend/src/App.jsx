@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
-import ViewBookDetails from "./components/viewbookDetails/ViewBookDetails";
+import ViewBookDetails from "./components/viewbookDetails/ViewBookDetails.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./store/auth";
 import UserOrserHistory from "./components/profile/UserOrserHistory";

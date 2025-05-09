@@ -11,7 +11,7 @@ require("./config/cloudinaryConfig");  // <-- Import Cloudinary config
 app.use("/api/v1/stripe-webhook", bodyParser.raw({ type: "application/json" }));
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:2000"], // Allow multiple localhost origins
+  origin: ["http://localhost:2004", "http://localhost:2000"], // Allow multiple localhost origins
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
@@ -25,7 +25,6 @@ const Fevourite = require("./router/fevourite");
 const Cart = require("./router/cart");
 const Order = require("./router/order");
 const paymentRoutes = require("./router/paymentRoutes");
-
 // ✅ Correct route structure
 app.use("/api/v1", user);
 app.use("/api/v1", Book);
@@ -33,6 +32,7 @@ app.use("/api/v1", Fevourite);
 app.use("/api/v1", Cart);
 app.use("/api/v1", Order);
 app.use("/api/v1", paymentRoutes);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started at port ${process.env.PORT}`);

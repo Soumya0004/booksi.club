@@ -3,6 +3,7 @@ import React from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 
+
 const BookCart = ({data,favourite}) => {
   const headers={
     id : localStorage.getItem("id"),
