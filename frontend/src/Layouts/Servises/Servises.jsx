@@ -7,8 +7,8 @@ import {  motion } from "motion/react";
 const Servises = () => {
   return (
    <motion.div 
-   initial={{ opacity: 0.2, y: 100 }}
-      transition={{ duration: 1 }}
+   initial={{ opacity: .1, y: 50 }}
+          transition={{delay:0.5, duration:2}}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
    className='flex  h-[15vh] items-center justify-evenly bg-[#1e1e20] ' >

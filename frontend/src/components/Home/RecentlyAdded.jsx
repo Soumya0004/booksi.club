@@ -35,10 +35,10 @@ const RecentlyAdded = () => {
     <>
       <motion.div className="mt-8 px-4"
       initial={{opacity:0.2, y:100}}
-      transition={{duration:1}}
+          transition={{delay:0.4, duration:2}}
       whileInView={{opacity:1,y:0}}
       viewport={{once:true}}>
-        <h4 className="text-ywhite text-lg lg:text-2xl font-semibold">Recently Added Books</h4>
+        <h4 className="text-ywhite text-lg lg:text-2xl font-semibold">New Arrivals Books</h4>
 
         {!Data && <div className="flex items-center justify-center my-8"><Loder /></div>}
 

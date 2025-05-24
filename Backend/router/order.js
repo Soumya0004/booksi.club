@@ -27,7 +27,7 @@ router.post("/place-order", authenticationToken, async (req, res) => {
     const newOrder = new Order({
       user: id,
       books: bookIds, //  Storing an array of book IDs
-      status: "Order placed",
+      status: "Pending",
     });
 
     const savedOrder = await newOrder.save();
