@@ -9,7 +9,7 @@ const UserOrderHistory = () => {
   const [error, setError] = useState("");
   const location = useLocation();
 
-  // ✅ Get success message from URL
+  //  Get success message from URL
   const successMessage = new URLSearchParams(location.search).get("success");
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const UserOrderHistory = () => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         };
 
-        // ✅ Fetch orders with populated book data
+        //  Fetch orders with populated book data
         const res = await axios.get(
           "http://localhost:1000/api/v1/get-order-history",
           { headers }
@@ -58,10 +58,10 @@ const UserOrderHistory = () => {
     <div className="p-4 text-zinc-100">
       <h1 className="text-3xl font-semibold mb-6">📜 Your Order History</h1>
 
-      {/* ✅ Show success message if payment was successful */}
+      {/*  Show success message if payment was successful */}
       {successMessage === "true" && (
         <div className="bg-green-600 text-white py-2 px-4 mb-4 rounded-lg">
-          ✅ Your payment was successful! Order has been placed.
+           Your payment was successful! Order has been placed.
         </div>
       )}
 

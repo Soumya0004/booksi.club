@@ -136,7 +136,7 @@ router.get("/get-recent-books", async (req, res) => {
   try {
     const books = await Book.find({ url: { $exists: true, $ne: "" } })
       .sort({ createdAt: -1 })
-      .limit(4);
+      .limit(8);
 
     if (!books.length) {
       return res.status(404).json({ message: "No recent books found" });
@@ -173,9 +173,5 @@ router.get("/get-book-by-id/:id", async (req, res) => {
     return res.status(500).json({ message: "An error occurred" });
   }
 });
-
-
-
-
 
 module.exports = router;

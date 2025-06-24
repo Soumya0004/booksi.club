@@ -7,15 +7,15 @@ const Order = require("../models/order");
 //   PLACE ORDER (MULTIPLE BOOKS SUPPORTED)
 router.post("/place-order", authenticationToken, async (req, res) => {
   try {
-    const { id } = req.headers; // User ID
-    const { order } = req.body; // Array of books
+    const { id } = req.headers; 
+    const { order } = req.body; 
 
     if (!order || order.length === 0) {
       return res.status(400).json({ message: "No items in order" });
     }
 
     //   Extract Book IDs Correctly
-    const bookIds = order.map((book) => book._id); // Ensure book IDs are stored
+    const bookIds = order.map((book) => book._id);
 
     //   Validate Books
     const existingBooks = await Book.find({ _id: { $in: bookIds } });

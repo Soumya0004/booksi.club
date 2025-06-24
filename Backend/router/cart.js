@@ -33,26 +33,31 @@ router.put("/add-to-cart" ,authenticationToken, async (req, res)=>{
 
 //remove from cart
 
-router.put("/remove-to-cart/:bookid" ,authenticationToken, async (req, res)=>{
-    try {
+router.put("/remove-to-cart/:bookid", authenticationToken, async (req, res) => {
+  try {
+    const { bookid } = req.params;
+    const { id } = req.headers;
 
-        const {bookid} = req.params;
-        const {id}= req.headers;
-        await User.findByIdAndUpdate(id,{
-            $pull:{cart:bookid},
-        });
+    // Remove book from cart
+    await User.findByIdAndUpdate(id, {
+      $pull: { cart: bookid },
+    });
 
-        return res.json({
-            status:"success",
-            message:"book remouve from cart"
-        });
-        
-    } catch (error) {
-        res.status(500).json({message:"An error occurre"})
-        
-    }
+    // Get updated user with populated cart
+    const updatedUser = await User.findById(id).populate("cart");
 
-})
+    return res.json({
+      status: "success",
+      message: "Book removed from cart",
+      data: updatedUser.cart,
+    });
+
+  } catch (error) {
+    console.error("Error removing from cart:", error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+});
+
 
 //get cart from a porticular user
 

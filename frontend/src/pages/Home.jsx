@@ -8,7 +8,7 @@ import Recrutor from "../Layouts/Banner/Recrutor.jsx";
 const Home = () => {
   return (
     <>
-      <div className="bg-zinc-900 text-white md:px-16  py-9   ">
+      <div className="bg-zinc-900 text-white md:px-16   py-9   ">
         <Hero className='' />
         <div className='px-8 md:px-0'><RecentlyAdded  /></div>
         {/* <Recrutor /> */}

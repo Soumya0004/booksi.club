@@ -2,14 +2,11 @@ import axios from 'axios';
 import React from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
-
-
 const BookCart = ({data,favourite}) => {
   const headers={
     id : localStorage.getItem("id"),
     authorization:`Bearer ${localStorage.getItem("token")}`, 
     bookid:data._id
-
   }
   const handleRemoveBack=async() => {
     const response=await axios.put(
@@ -18,8 +15,7 @@ const BookCart = ({data,favourite}) => {
     toast.success(response.data.message);
     
   }
-  // 
-    
+  
   return (
     <div className='bg-zinc-800  rounded-xl py-2  px-5 md:px-3  flex  flex-col  h-[45h] md:h-[45vh]  lg:h-[52vh] hover:scale-105 transition-all  duration-500  ' >
 
@@ -46,5 +42,4 @@ const BookCart = ({data,favourite}) => {
     </div>
   )
 }
-
 export default BookCart

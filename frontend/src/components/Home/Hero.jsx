@@ -5,7 +5,7 @@ import { motion } from "motion/react"
 const Hero = () => {
   return (
     <>
-      <motion.div className="h-auto md:h-[76vh] flex flex-col md:flex-row  items-center mt-10 md:mt-0  lg:ml-20"
+      <motion.div className="h-auto md:h-[76vh] flex flex-col md:flex-row  items-center mt-10 md:mt-0  lg:ml-20 px-5 md:px-0"
       initial={{opacity:0.2, y:100}}
       transition={{duration:1}}
       whileInView={{opacity:1,y:0}}

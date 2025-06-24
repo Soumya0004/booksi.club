@@ -4,13 +4,13 @@ const orderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Types.ObjectId,
-      ref: "user", // ✅ Ensure it matches your User model name
+      ref: "user", 
       required: true,
     },
     books: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "books", // ✅ Ensure it matches your Book model name
+        ref: "books", 
         required: true,
       }
     ],

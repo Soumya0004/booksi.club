@@ -34,8 +34,8 @@ const RecentlyAdded = () => {
   return (
     <>
       <motion.div className="mt-8 px-4"
-      initial={{opacity:0.2, y:100}}
-      transition={{duration:1}}
+     initial={{opacity:0.2, y:100}}
+          transition={{delay:0.2, duration:1}}
       whileInView={{opacity:1,y:0}}
       viewport={{once:true}}>
         <h4 className="text-ywhite text-lg lg:text-2xl font-semibold">Recently Added Books</h4>

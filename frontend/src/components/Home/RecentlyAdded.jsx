@@ -6,14 +6,16 @@ import "slick-carousel/slick/slick-theme.css";
 import BookCart from "../BookCard/BookCart";
 import Slider from "react-slick";
 import Loder from "../../Layouts/Loder/Loder";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 const RecentlyAdded = () => {
   const [Data, setData] = useState();
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get("http://localhost:1000/api/v1/get-recent-books");
+      const response = await axios.get(
+        "http://localhost:1000/api/v1/get-recent-books"
+      );
       setData(response.data.data);
     };
     fetch();
@@ -28,27 +30,35 @@ const RecentlyAdded = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    
   };
 
   return (
     <>
-      <motion.div className="mt-8 px-4"
-      initial={{opacity:0.2, y:100}}
-          transition={{delay:0.4, duration:2}}
-      whileInView={{opacity:1,y:0}}
-      viewport={{once:true}}>
-        <h4 className="text-ywhite text-lg lg:text-2xl font-semibold">New Arrivals Books</h4>
+      <motion.div
+        className="mt-8 px-4"
+        initial={{ opacity: 0.2, y: 100 }}
+        transition={{ delay: 0.2, duration: 1 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h4 className="text-ywhite text-lg lg:text-2xl font-semibold">
+          New Arrivals Books
+        </h4>
 
-        {!Data && <div className="flex items-center justify-center my-8"><Loder /></div>}
+        {!Data && (
+          <div className="flex items-center justify-center my-8">
+            <Loder />
+          </div>
+        )}
 
         {/* Grid Layout for Tablets and Large Screens */}
         <div className="my-8 hidden md:grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 gap-4">
-          {Data && Data.map((items, i) => (
-            <div key={i}>
-              <BookCart data={items} />
-            </div>
-          ))}
+          {Data &&
+            Data.map((items, i) => (
+              <div key={i}>
+                <BookCart data={items} />
+              </div>
+            ))}
         </div>
 
         {/* Slider for Mobile Screens ONLY */}
