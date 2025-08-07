@@ -1,19 +1,32 @@
 import React from "react";
 import { Link } from "react-router";
 import HeroImg from "./img/hero.png";
-
+import { motion } from "motion/react"
 const Hero = () => {
   return (
     <>
-      <div className="h-auto md:h-[76vh] flex flex-col md:flex-row  items-center mt-10 md:mt-0  lg:ml-20">
+      <motion.div className="h-auto md:h-[76vh] flex flex-col md:flex-row  items-center mt-10 md:mt-0  lg:ml-20"
+      initial={{opacity:0.2, y:100}}
+      transition={{duration:1}}
+      whileInView={{opacity:1,y:0}}
+      viewport={{once:true}}
+      >
         <div className="md:w-3/6 mb-10 md:m-0 w-full justify-center flex flex-col items-center lg:items-start  ">
-          <h1 className="lg:text-6xl text-2xl font-semibold text-white ">
+          <motion.h1
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay:0.4, duration:2}}
+          className="lg:text-6xl text-2xl font-semibold text-white ">
             Discover your next Great Ready
-          </h1>
-          <p className="mt-4 md:text-md text-sm  text-center  lg:text-2xl text-white  md:text-left">
+          </motion.h1>
+          <motion.p 
+           initial={{opacity:0}}
+           animate={{opacity:1}}
+           transition={{delay:0.4, duration:2}}
+          className="mt-4 md:text-md text-sm  text-center  lg:text-2xl text-white  md:text-left">
             Uncover captivation stories, enriching knowledge ,and endless
             inspriation in our curated collection of books
-          </p>
+          </motion.p>
 
           <div className="mt-7 hover:scale-95 transition-all duration-300">
             <Link
@@ -33,7 +46,7 @@ const Hero = () => {
 
           {/* <HeroBook /> */}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

@@ -11,7 +11,7 @@ require("./config/cloudinaryConfig");  // <-- Import Cloudinary config
 app.use("/api/v1/stripe-webhook", bodyParser.raw({ type: "application/json" }));
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:2000"], // Allow multiple localhost origins
+  origin: ["http://localhost:2004", "http://localhost:2000"], // Allow multiple localhost origins
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

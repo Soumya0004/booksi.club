@@ -75,14 +75,27 @@ const AllorderHistory = () => {
         <div className="p-4 text-zinc-100">
           <h1 className="text-3xl font-semibold mb-6">📜 All Order History</h1>
 
-          <div className="bg-zinc-800 w-full rounded py-2 px-4 flex gap-4 text-sm font-semibold">
-            <div className="w-6 text-center">#</div>
-            <div className="w-48">Books</div>
-            <div className="hidden md:block w-64">Description</div>
-            <div className="w-24">Price</div>
-            <div className="w-32">Status</div>
-            <div className="hidden md:block w-16">
-              <FaUser />
+          <div className="mt-4 bg-zinc-800 w-full rounded py-2 px-4 flex gap-2">
+            <div className=" w-[1rem]">
+              <h1 className="text-center">SL.</h1>
+            </div>
+            <div className="w-[10rem] md:w-[13rem] lg:w-[16rem]">
+              <h1 className="">Book</h1>
+            </div>
+            <div className="w-[12rem] hidden md:block lg:w-[19.5rem]">
+              <h1 className="">Description</h1>
+            </div>
+
+            <div className="w-[4rem] md:w-[7rem] lg:w-[14rem]">
+              <h1 className="">Price</h1>
+            </div>
+            <div className="w-[6rem] md:w-[7rem] lg:w-[15rem]">
+              <h1 className="">Status</h1>
+            </div>
+            <div className="w-[1rem]  hidden md:block ">
+              <h1 className="">
+                <FaUser />
+              </h1>
             </div>
           </div>
 
@@ -91,17 +104,17 @@ const AllorderHistory = () => {
               key={order?._id || i}
               className="bg-zinc-800 w-full rounded py-2 px-4 flex gap-4 hover:bg-zinc-900 transition-all duration-300"
             >
-              <div className="w-6 text-center">{i + 1}</div>
+              <div className="w-[3%] md:w-[.3rem] lg:w-[1rem]">{i + 1}</div>
 
-              {/* ✅ Display multiple books per order */}
-              <div className="w-48">
+              {/* Display multiple books per order */}
+              <div className="w-[12rem] md:w-[13rem] lg:w-[15rem]">
                 {order.books && order.books.length > 0 ? (
                   <ul>
                     {order.books.map((book) => (
                       <li key={book._id}>
                         <Link
                           to={`/view-book-details/${book._id}`}
-                          className="hover:text-blue-300"
+                          className="hover:text-blue-300 text-[.8rem] md:text-xs lg:text-base"
                         >
                           {book.title}
                         </Link>
@@ -113,21 +126,21 @@ const AllorderHistory = () => {
                 )}
               </div>
 
-              <div className="hidden md:block w-64 text-sm">
+              <div className="hidden md:block w-[12rem] text-[.8rem] md:text-xs lg:text-base lg:w-[19rem]">
                 {order.books && order.books.length > 0
                   ? `${order.books[0].desc.slice(0, 50)}...`
                   : "No description"}
               </div>
 
-              <div className="w-24 text-sm">
+              <div className="w-[4rem] md:w-[6rem] text-[.8rem] md:text-xs lg:text-base lg:w-[13rem]">
                 ₹
                 {order.books && order.books.length > 0
                   ? order.books.reduce((acc, book) => acc + (book.price || 0), 0)
                   : "N/A"}
               </div>
 
-              {/* ✅ Status update dropdown */}
-              <div className="w-32">
+              {/*  Status update dropdown */}
+              <div className="w-[6rem] md:w-[7rem] text-[.8rem] md:text-xs lg:text-base lg:w-[15rem]">
                 <button
                   className="hover:scale-105 transition-all duration-300"
                   onClick={() => setOptions(i)}
@@ -160,7 +173,7 @@ const AllorderHistory = () => {
                       ))}
                     </select>
                     <button
-                      className="text-green-500 hover:text-purple-600 mx-2"
+                      className="text-green-500 hover:text-purple-600 mx-2 "
                       onClick={() => submitChanges(i)}
                     >
                       <FaCheck />
@@ -169,9 +182,9 @@ const AllorderHistory = () => {
                 )}
               </div>
 
-              <div className="w-16">
+              <div className="w-[1rem] ">
                 <button
-                  className="hover:text-orange-500"
+                  className="text-[.8rem] md:text-xs lg:text-base hover:text-orange-500"
                   onClick={() => {
                     setuserDiv("fixed");
                     setuserDivData(order.user);

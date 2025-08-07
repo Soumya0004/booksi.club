@@ -81,7 +81,7 @@ router.get("/get-order-history", authenticationToken, async (req, res) => {
 });
 
 
-// 📌 ✅ GET ALL ORDERS (ADMIN)
+// GET ALL ORDERS (ADMIN)
 router.get("/get-all-orders", authenticationToken, async (req, res) => {
     try {
         const allOrders = await Order.find()

@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import BookCart from "../BookCard/BookCart";
 import Slider from "react-slick";
 import Loder from "../../Layouts/Loder/Loder";
+import { motion } from "motion/react"
 
 const RecentlyAdded = () => {
   const [Data, setData] = useState();
@@ -32,7 +33,11 @@ const RecentlyAdded = () => {
 
   return (
     <>
-      <div className="mt-8 px-4">
+      <motion.div className="mt-8 px-4"
+      initial={{opacity:0.2, y:100}}
+      transition={{duration:1}}
+      whileInView={{opacity:1,y:0}}
+      viewport={{once:true}}>
         <h4 className="text-ywhite text-lg lg:text-2xl font-semibold">Recently Added Books</h4>
 
         {!Data && <div className="flex items-center justify-center my-8"><Loder /></div>}
@@ -58,7 +63,7 @@ const RecentlyAdded = () => {
             </Slider>
           </div>
         )}
-      </div>
+      </motion.div>
     </>
   );
 };
