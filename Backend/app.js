@@ -3,36 +3,43 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 
+// Database & Cloudinary Config
 require("./Conn/conn");
 require("./config/cloudinaryConfig");
 
 const app = express();
 
-// ✅ CORS must come BEFORE routes or bodyParser.json()
-app.use(
-  cors({
-    origin: [
-      "http://localhost:2000",                      // local user frontend
-      "http://localhost:2004",                      // local admin panel
-      "https://booksiclub.netlify.app",             // deployed user site
-      "https://bookisadmin.netlify.app"             // deployed admin panel
-    ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    credentials: true,
-  })
-);
+// ✅ Allowed origins for frontend
+const allowedOrigins = [
+  "http://localhost:2000",              // local user frontend
+  "http://localhost:2004",              // local admin panel
+  "https://booksiclub.netlify.app",     // deployed user frontend
+  "https://bookisadmin.netlify.app"     // deployed admin panel
+];
 
-// ✅ Manually handle OPTIONS requests for all routes (preflight)
-app.options("*", cors());
+// ✅ Apply CORS before all other middleware/routes
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
 
-// ✅ Stripe Webhook must use raw body
+// ✅ Stripe Webhook must come before express.json()
 app.post(
   "/api/v1/stripe-webhook",
   bodyParser.raw({ type: "application/json" }),
   require("./router/stripeWebhook")
 );
 
-// ✅ General Middleware
+// ✅ General Body Parsers (after webhook)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
