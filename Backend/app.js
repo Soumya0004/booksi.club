@@ -8,14 +8,7 @@ require("./config/cloudinaryConfig");
 
 const app = express();
 
-// ✅ Stripe Webhook FIRST — raw body parser
-app.post(
-  "/api/v1/stripe-webhook",
-  bodyParser.raw({ type: "application/json" }),
-  require("./router/stripeWebhook")
-);
-
-// ✅ CORS Setup
+// ✅ CORS must come BEFORE routes or bodyParser.json()
 app.use(
   cors({
     origin: [
@@ -24,12 +17,22 @@ app.use(
       "https://booksiclub.netlify.app",             // deployed user site
       "https://bookisadmin.netlify.app"             // deployed admin panel
     ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
   })
 );
 
-// ✅ Middleware
+// ✅ Manually handle OPTIONS requests for all routes (preflight)
+app.options("*", cors());
+
+// ✅ Stripe Webhook must use raw body
+app.post(
+  "/api/v1/stripe-webhook",
+  bodyParser.raw({ type: "application/json" }),
+  require("./router/stripeWebhook")
+);
+
+// ✅ General Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -41,9 +44,8 @@ app.use("/api/v1", require("./router/cart"));
 app.use("/api/v1", require("./router/order"));
 app.use("/api/v1", require("./router/paymentRoutes"));
 
-// ✅ Start Server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
