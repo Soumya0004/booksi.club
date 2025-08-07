@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const BookCart = ({data,favourite}) => {
   const headers={
@@ -12,7 +13,7 @@ const BookCart = ({data,favourite}) => {
   }
   const handleRemoveBack=async() => {
     const response=await axios.put(
-      "http://localhost:1000/api/v1/remove-book-to-favourite",{},{headers}
+      `${BACKEND_API}/api/v1/remove-book-to-favourite`,{},{headers}
     )
     toast.success(response.data.message);
     

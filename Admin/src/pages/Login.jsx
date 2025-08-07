@@ -6,6 +6,7 @@ import { authActions } from "../store/auth";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const Login = () => {
   const [Values, setValues] = useState({
@@ -28,7 +29,7 @@ const Login = () => {
         return;
       }
       const response = await axios.post(
-        "http://localhost:1000/api/v1/sign-in",
+       `${BACKEND_API}/api/v1/sign-in`,
         Values
       );
 

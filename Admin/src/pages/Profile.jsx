@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import Loder from "../Layouts/Loder/Loder";
 import MobileNav from "../components/profile/MobileNav";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
+
 const Profile = () => {
   // const isLoggedIn= useSelector();
 
@@ -17,7 +19,7 @@ const Profile = () => {
   useEffect(() => {
     const fatch = async () => {
       const response = await axios.get(
-        "http://localhost:1000/api/v1/get-user-information",
+       `${BACKEND_API}/api/v1/get-user-information`,
         { headers }
       );
 

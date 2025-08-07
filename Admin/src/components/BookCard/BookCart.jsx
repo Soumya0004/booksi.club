@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const BookCart = ({ data, favourite }) => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ const BookCart = ({ data, favourite }) => {
     setLoading(true);
     try {
       const response = await axios.put(
-        "http://localhost:1000/api/v1/remove-book-to-favourite",
+        `${BACKEND_API}/api/v1/remove-book-to-favourite`,
         {},
         { headers }
       );

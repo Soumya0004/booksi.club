@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const ViewBookDetails = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const ViewBookDetails = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        `http://localhost:1000/api/v1/get-book-by-id/${id}`
+        `${BACKEND_API}/api/v1/get-book-by-id/${id}`
       );
 
       setData(response.data.data);
@@ -36,7 +37,7 @@ const ViewBookDetails = () => {
   };
   const handleFavourites = async () => {
     const response = await axios.put(
-      "http://localhost:1000/api/v1/add-book-to-favourite",
+      `${BACKEND_API}/api/v1/add-book-to-favourite`,
       {},
       { headers }
     );
@@ -44,14 +45,14 @@ const ViewBookDetails = () => {
   };
   const handleCart = async () => {
     const response = await axios.put(
-      "http://localhost:1000/api/v1/add-to-cart",
+     ` ${BACKEND_API}/api/v1/add-to-cart`,
       {},
       { headers }
     );
     toast.success(response.data.message);
   };
   const deletebook = async () => {
-    const res = await axios.delete("http://localhost:1000/api/v1/delete-book", {
+    const res = await axios.delete(`${BACKEND_API}/api/v1/delete-book`, {
       headers,
     });
     toast(res.data.message);

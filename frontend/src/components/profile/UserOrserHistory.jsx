@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Loder from "../../Layouts/Loder/Loder";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const UserOrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
@@ -22,7 +23,7 @@ const UserOrderHistory = () => {
 
         // ✅ Fetch orders with populated book data
         const res = await axios.get(
-          "http://localhost:1000/api/v1/get-order-history",
+          `${BACKEND_API}/api/v1/get-order-history `,
           { headers }
         );
 

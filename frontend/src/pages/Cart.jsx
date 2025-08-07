@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe("pk_test_51R4FG6Gv2pMJ1VmOUefNrSvlaPuXAoYnRiNYFwWSyjU61XDlBQQBlQc6IoWiMrfpy3bonBr11SLQfe7aF57Yfntm00vkYoz3X6"); // Stripe public key
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Cart = () => {
     const fetchCart = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:1000/api/v1/get-user-cart", { headers });
+        const response = await axios.get(`${BACKEND_API}/api/v1/get-user-cart`, { headers });
         setCarts(response.data.data || []);
       } catch (error) {
         toast.error("Failed to load cart items");
@@ -46,7 +47,7 @@ const Cart = () => {
 
   const deleteItem = async (bookId) => {
     try {
-      const response = await axios.put(`http://localhost:1000/api/v1/remove-to-cart/${bookId}`, {}, { headers });
+      const response = await axios.put(`${BACKEND_API}/api/v1/remove-to-cart/${bookId}`, {}, { headers });
       if (response.data.data) {
         setCarts(response.data.data);
         toast.success("Item removed from cart");
@@ -71,7 +72,7 @@ const Cart = () => {
         toast.error("User not found. Please log in again.");
         return;
       }
-      const res = await axios.post("http://localhost:1000/api/v1/create-checkout-session", { order: Cart, userId }, { headers });
+      const res = await axios.post(`${BACKEND_API}/api/v1/create-checkout-session`, { order: Cart, userId }, { headers });
       const result = await stripe.redirectToCheckout({ sessionId: res.data.sessionId });
       if (result.error) {
         toast.error(result.error.message);

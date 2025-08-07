@@ -7,13 +7,14 @@ import BookCart from "../BookCard/BookCart";
 import Slider from "react-slick";
 import Loder from "../../Layouts/Loder/Loder";
 import { motion } from "motion/react"
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const RecentlyAdded = () => {
   const [Data, setData] = useState();
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get("http://localhost:1000/api/v1/get-recent-books");
+      const response = await axios.get(`${BACKEND_API}/api/v1/get-recent-books`);
       setData(response.data.data);
     };
     fetch();

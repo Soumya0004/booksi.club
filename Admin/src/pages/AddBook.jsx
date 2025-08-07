@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const allowedCategories = [
   "Manga",
@@ -77,7 +78,7 @@ const AddBook = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:1000/api/v1/add-book",
+        `${BACKEND_API}/api/v1/add-book`,
         formData,
         { headers }
       );

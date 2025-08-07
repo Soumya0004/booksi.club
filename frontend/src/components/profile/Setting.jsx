@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Loder from "../../Layouts/Loder/Loder";
 import axios from "axios";
 import toast from "react-hot-toast";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
+
 const Setting = () => {
   const [Value, setValue] = useState({ address: "" });
   const [Profiledata, setProfiledata] = useState();
@@ -16,7 +18,7 @@ const Setting = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        "http://localhost:1000/api/v1/get-user-information",
+       ` ${BACKEND_API}/api/v1/get-user-information`,
         { headers }
       );
       setProfiledata(response.data);
@@ -26,7 +28,7 @@ const Setting = () => {
   }, []);
   const submitaddress = async () => {
     const response = await axios.put(
-      "http://localhost:1000/api/v1/update-address",
+      `${BACKEND_API}/api/v1/update-address`,
       Value,
       { headers }
     );

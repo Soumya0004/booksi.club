@@ -7,6 +7,7 @@ import { FaCheck } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { IoOpenOutline } from "react-icons/io5";
 import Userdata from "./userdata";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const AllorderHistory = () => {
   const [Allorders, setAllorders] = useState([]);
@@ -24,7 +25,7 @@ const AllorderHistory = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:1000/api/v1/get-all-orders",
+         `${BACKEND_API}/api/v1/get-all-orders`,
           { headers }
         );
         setAllorders(res.data.data);
@@ -48,7 +49,7 @@ const AllorderHistory = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:1000/api/v1/update-status/${id}`,
+        `${BACKEND_API}/api/v1/update-status/${id}`,
         Values,
         { headers }
       );

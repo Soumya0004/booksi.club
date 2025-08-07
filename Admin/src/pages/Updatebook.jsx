@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
+
 const UpdateBook = () => {
   const [Data, setData] = useState({
     url: "",
@@ -38,7 +40,7 @@ const UpdateBook = () => {
         toast("All fields are required");
       } else {
         const res = await axios.put(
-          "http://localhost:1000/api/v1/update-book",
+          `${BACKEND_API}/api/v1/update-book`,
           Data,
           { headers }
         );
@@ -60,7 +62,7 @@ const UpdateBook = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        `http://localhost:1000/api/v1/get-book-by-id/${id}`
+        `${BACKEND_API}/api/v1/get-book-by-id/${id}`
       );
 
       setData(response.data.data);

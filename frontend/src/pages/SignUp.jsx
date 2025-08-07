@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const SignUp = () => {
   const [Values, setValues] = useState({
@@ -33,7 +34,7 @@ const SignUp = () => {
         toast("All feilds are required");
       } else {
         const response = await axios.post(
-          "http://localhost:1000/api/v1/sign-up",
+          `${BACKEND_API}/api/v1/sign-up`,
           Values
         );
 

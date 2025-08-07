@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import BookCart from "../components/BookCard/BookCart";
 import Loder from "../Layouts/Loder/Loder";
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
 
 const Allbooks = () => {
   const [Data, setData] = useState([]);
@@ -16,7 +17,7 @@ const Allbooks = () => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-all-books"
+          `${BACKEND_API}/api/v1/get-all-books`
         );
         const books = response.data.data || [];
         setData(books);

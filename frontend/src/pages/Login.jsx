@@ -7,13 +7,14 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
 
+// ✅ Define backend API base URL once
+const BACKEND_API = import.meta.env.VITE_BACKEND_API;
+
 const Login = () => {
   const [Values, setValues] = useState({
     username: "",
     password: "",
   });
-
-  //for password toggling
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -24,13 +25,15 @@ const Login = () => {
     const { name, value } = e.target;
     setValues({ ...Values, [name]: value });
   };
+
   const submit = async () => {
     try {
       if (Values.username === "" || Values.password === "") {
-        toast("All feilds are required");
+        toast("All fields are required");
       } else {
+        // ✅ Use constant for API URL
         const response = await axios.post(
-          "http://localhost:1000/api/v1/sign-in",
+          `${BACKEND_API}/api/v1/sign-in`,
           Values
         );
 
@@ -40,10 +43,11 @@ const Login = () => {
         localStorage.setItem("id", response.data.id);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
+
         navigate("/profile");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 
@@ -54,9 +58,7 @@ const Login = () => {
           <h1 className="text-zinc-200 font-bold text-xl">Login</h1>
           <div className="mt-4">
             <div>
-              <label htmlFor="" className="text-zinc-400">
-                Username
-              </label>
+              <label className="text-zinc-400">Username</label>
               <input
                 type="text"
                 className="rounded-md w-full mt-2 bg-[#e8f0fe] text-black p-2 outline-none"
@@ -68,42 +70,43 @@ const Login = () => {
               />
             </div>
 
-            <div className="mt-4 ">
-              <label htmlFor="" className="text-zinc-400">
-                Password
-              </label>
-             <div className="flex bg-[#e8f0fe] rounded-md">
-             <input
-             
-                type={showPassword ? "text" : "password"}
-                className="rounded-md w-full mt-2 bg-[#e8f0fe] text-black p-1  outline-none"
-                placeholder="Password"
-                name="password"
-                required
-                value={Values.password}
-                onChange={change}
-              />
-              <button
-        variant="ghost"
-        size="icon"
-        onClick={() => setShowPassword(!showPassword)}
-      >
-        {showPassword ? <EyeOff  className="text-zinc-900 text-lg mr-2" /> : <Eye className="text-zinc-900 text-lg mr-2" />}
-      </button>
-             </div>
+            <div className="mt-4">
+              <label className="text-zinc-400">Password</label>
+              <div className="flex bg-[#e8f0fe] rounded-md">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="rounded-md w-full mt-2 bg-[#e8f0fe] text-black p-1 outline-none"
+                  placeholder="Password"
+                  name="password"
+                  required
+                  value={Values.password}
+                  onChange={change}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="text-zinc-900 text-lg mr-2 mt-2" />
+                  ) : (
+                    <Eye className="text-zinc-900 text-lg mr-2 mt-2" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="mt-4">
               <button
-                className="w-full bg-[#ff485c] text-white font-semibold py-2 rounded hover:bg-[#e8f0fe] hover:text-blue-500 duration-500 hover:scale-95 "
+                className="w-full bg-[#ff485c] text-white font-semibold py-2 rounded hover:bg-[#e8f0fe] hover:text-blue-500 duration-500 hover:scale-95"
                 onClick={submit}
               >
                 Login
               </button>
             </div>
+
             <p className="mt-4 text-zinc-200 font-semibold text-center">Or</p>
             <p className="mt-4 text-zinc-600 font-semibold text-center">
-              Dont have an account?{" "}
+              Don’t have an account?{" "}
               <Link to="/signup" className="underline">
                 Sign up
               </Link>
