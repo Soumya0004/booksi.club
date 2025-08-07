@@ -3,21 +3,21 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 
-// Database & Cloudinary Config
+// Load DB and Cloudinary Configs
 require("./Conn/conn");
 require("./config/cloudinaryConfig");
 
 const app = express();
 
-// ✅ Allowed origins for frontend
+// ✅ Allowed frontend domains
 const allowedOrigins = [
-  "http://localhost:2000",              // local user frontend
-  "http://localhost:2004",              // local admin panel
-  "https://booksiclub.netlify.app",     // deployed user frontend
-  "https://bookisadmin.netlify.app"     // deployed admin panel
+  "http://localhost:2000",
+  "http://localhost:2004",
+  "https://booksiclub.netlify.app",
+  "https://bookisadmin.netlify.app",
 ];
 
-// ✅ Apply CORS before all other middleware/routes
+// ✅ Apply CORS middleware
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -26,24 +26,27 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  // Handle preflight request
   if (req.method === "OPTIONS") {
     return res.sendStatus(204);
   }
+
   next();
 });
 
-// ✅ Stripe Webhook must come before express.json()
+// ✅ Stripe webhook: use raw body parser here only
 app.post(
   "/api/v1/stripe-webhook",
   bodyParser.raw({ type: "application/json" }),
   require("./router/stripeWebhook")
 );
 
-// ✅ General Body Parsers (after webhook)
+// ✅ Body parsers for all other routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Routes
+// ✅ Main API Routes
 app.use("/api/v1", require("./router/user"));
 app.use("/api/v1", require("./router/book"));
 app.use("/api/v1", require("./router/fevourite"));
@@ -51,7 +54,7 @@ app.use("/api/v1", require("./router/cart"));
 app.use("/api/v1", require("./router/order"));
 app.use("/api/v1", require("./router/paymentRoutes"));
 
-// ✅ Start server
+// ✅ Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
