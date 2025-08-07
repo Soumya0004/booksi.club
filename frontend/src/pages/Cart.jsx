@@ -46,18 +46,20 @@ const Cart = () => {
   }, [location.search]);
 
   const deleteItem = async (bookId) => {
-    try {
-      const response = await axios.put(`${BACKEND_API}/api/v1/remove-to-cart/${bookId}`, {}, { headers });
-      if (response.data.data) {
-        setCarts(response.data.data);
-        toast.success("Item removed from cart");
-      } else {
-        toast.error("Failed to update cart");
-      }
-    } catch (error) {
-      toast.error("Failed to remove item");
+  try {
+    const response = await axios.put(`${BACKEND_API}/api/v1/remove-to-cart/${bookId}`, {}, { headers });
+
+    if (response.data.status === "Success" && response.data.data) {
+      setCarts(response.data.data); 
+      toast.success("Item removed from cart");
+    } else {
+      toast.error("Failed to update cart");
     }
-  };
+  } catch (error) {
+    toast.error("Failed to remove item");
+  }
+};
+
 
   useEffect(() => {
     const total = Cart.reduce((sum, item) => sum + (item.price || 0), 0);

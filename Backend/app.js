@@ -1,6 +1,6 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 require("./Conn/conn");
@@ -8,41 +8,38 @@ require("./config/cloudinaryConfig");
 
 const app = express();
 
-// ✅ Correct and Safe CORS setup
-const allowedOrigins = [
-  "http://localhost:2000",                     // local user frontend
-  "http://localhost:2004",                     // local admin panel
-  "https://booksiclub.netlify.app",            // deployed user site
-  "https://bookisadmin.netlify.app"            // deployed admin panel
-];
-
+// ✅ CORS Setup
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
+      const allowedOrigins = [
+        "http://localhost:2000",
+        "http://localhost:2004",
+        "https://booksiclub.netlify.app",
+        "https://bookisadmin.netlify.app",
+      ];
+      console.log("CORS request from:", origin);
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
       } else {
-        return callback(new Error("Not allowed by CORS"));
+        callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
   })
 );
 
-// ✅ Ensure OPTIONS preflight is handled
-app.options("*", cors());
+app.options("*", cors()); // ✅ Enable preflight
 
-// ✅ Stripe webhook (raw body required)
+// ✅ Stripe webhook (raw body)
 app.post(
   "/api/v1/stripe-webhook",
   bodyParser.raw({ type: "application/json" }),
   require("./router/stripeWebhook")
 );
 
-// ✅ General body parsing
+// ✅ General middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -54,7 +51,6 @@ app.use("/api/v1", require("./router/cart"));
 app.use("/api/v1", require("./router/order"));
 app.use("/api/v1", require("./router/paymentRoutes"));
 
-// ✅ Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
